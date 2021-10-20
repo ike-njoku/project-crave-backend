@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res } from '@nestjs/common';
 import { EnumeratorService } from './enumerator.service';
 import { CreateEnumeratorDto } from './dto/create-enumerator.dto';
 import { UpdateEnumeratorDto } from './dto/update-enumerator.dto';
@@ -8,7 +8,7 @@ export class EnumeratorController {
   constructor(private readonly enumeratorService: EnumeratorService) {}
 
   @Post('create')
-  create(@Body() createEnumeratorDto: CreateEnumeratorDto) {
+  create(@Body() @Res() createEnumeratorDto: CreateEnumeratorDto) {
     return this.enumeratorService.create(createEnumeratorDto);
   }
 
