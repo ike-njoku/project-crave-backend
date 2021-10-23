@@ -5,6 +5,7 @@ export type EnumeratorDocument = Enumerator & Document;
 
 @Schema()
 export class Enumerator  {
+
   @Prop({required: true})
   firstName: string;
 
