@@ -10,15 +10,21 @@ export class EmailService {
 
   sendNewEnumeratorPasswordAndWelcome(
     enumeratorEmail: string,
+    enumeratorFirstName: string,
     enumeratorPassword: string
     ) {
 
+    console.log(enumeratorFirstName)
     this.mailerService.sendMail({
       to: `${enumeratorEmail}`, // list of receivers
-      from: 'ikenjokudc@ymail.com', // sender address
-      subject: 'Testing Nest MailerModule ✔', // Subject line
+      from: `NoReply@ProjectCRAVE <ikenjokudc@ymail.com>`, // sender address
+      subject: 'Welcome to CRAVE', // Subject line
       text: '', // plaintext body
-      html: `<h2>${enumeratorPassword}</h2>`, // HTML body content
+      html: `
+      Welcome, ${enumeratorFirstName}. You have signed up to be a data enumerator on the CRAVE project. <br>
+      Your login password is:
+      <h2>${enumeratorPassword}</h2>
+      `, // HTML body content
     })
       .then(
       () => console.log(`password sent to ${enumeratorEmail}`)
