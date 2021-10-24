@@ -41,7 +41,9 @@ export class EnumeratorService {
       if (newEnumerator) {
         const enumeratorPassword = Math.random().toString(36).slice(-8);
         await this.emailService.sendNewEnumeratorPasswordAndWelcome(
-          newEnumerator.emailAddress, enumeratorPassword
+          newEnumerator.emailAddress, 
+          createEnumeratorDto.firstName,
+          enumeratorPassword
         )
   
         response.data = null;
