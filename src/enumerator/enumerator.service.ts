@@ -36,7 +36,9 @@ export class EnumeratorService {
     const newEnumerator = new this.enumeratorModel(createEnumeratorDto);
     await newEnumerator.save();
     if (newEnumerator) {
-      console.log('successfully created new enumerator');
+      const enumeratorPassword = Math.random().toString(36).slice(-8);
+
+      
       response.data = null;
       response.message = 'Your account has been created Successfully';
       response.status = 'success'
