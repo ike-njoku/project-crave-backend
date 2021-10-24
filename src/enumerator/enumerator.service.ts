@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { EmailService } from 'src/email/email/email.service';
 import { ServerResponseDTO } from 'src/shared-interfaces/server-response-dto.dto';
 import { CreateEnumeratorDto } from './dto/create-enumerator.dto';
 import { UpdateEnumeratorDto } from './dto/update-enumerator.dto';
@@ -10,6 +11,7 @@ import { Enumerator, EnumeratorDocument } from './enumerator.schema';
 export class EnumeratorService {
 
   constructor(
+    private emailService: EmailService,
     @InjectModel(Enumerator.name) private enumeratorModel: Model<EnumeratorDocument>
   ) {
 
@@ -35,22 +37,30 @@ export class EnumeratorService {
     
     const newEnumerator = new this.enumeratorModel(createEnumeratorDto);
     await newEnumerator.save();
-    if (newEnumerator) {
-      const enumeratorPassword = Math.random().toString(36).slice(-8);
-
+    try {
+      if (newEnumerator) {
+        const enumeratorPassword = Math.random().toString(36).slice(-8);
+        await this.emailService.sendNewEnumeratorPasswordAndWelcome(
+          newEnumerator.emailAddress, enumeratorPassword
+        )
+  
+        response.data = null;
+        response.message = 'Your account has been created Successfully';
+        response.status = 'success'
+        return response;
+      }
+  
+      else {
+        response.data = null;
+        response.message = 'Could not create account. Please retry';
+        response.status = 'fail'
+        return response
+      }
       
-      response.data = null;
-      response.message = 'Your account has been created Successfully';
-      response.status = 'success'
-      return response;
+    } catch (error) {
+      console.log(error)
     }
-
-    else {
-      response.data = null;
-      response.message = 'Could not create account. Please retry';
-      response.status = 'fail'
-      return response
-    }
+    
   }
 
   findAll() {

@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { EnumeratorModule } from './enumerator/enumerator.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { MailerModule } from '@nestjs-modules/mailer';
       defaults: {
         from: '"No Reply" <no-reply@localhost>',
       },
-    })
+    }),
+    EmailModule
   ],
   controllers: [AppController],
   providers: [AppService],
