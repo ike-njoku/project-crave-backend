@@ -5,6 +5,7 @@ import { EnumeratorModule } from './enumerator/enumerator.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { EmailModule } from './email/email.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { EmailModule } from './email/email.module';
         from: '"No Reply" <no-reply@localhost>',
       },
     }),
-    EmailModule
+    EmailModule,
+    AuthenticationModule
   ],
   controllers: [AppController],
   providers: [AppService],
