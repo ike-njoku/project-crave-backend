@@ -12,7 +12,7 @@ export class EnumeratorController {
     return this.enumeratorService.create(createEnumeratorDto);
   }
 
-  @Get()
+  @Get('list')
   findAll() {
     return this.enumeratorService.findAll();
   }

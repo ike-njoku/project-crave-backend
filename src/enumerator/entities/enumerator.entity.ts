@@ -1,1 +1,2 @@
-export class Enumerator {}
+export class Enumerator {
+}

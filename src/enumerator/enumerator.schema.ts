@@ -20,6 +20,15 @@ export class Enumerator  {
 
   @Prop()
   secondaryPhone: string;
+
+  @Prop()
+  password: string
+
+  @Prop()
+  id: string
+
+  @Prop()
+  enumerations: string;
 }
 
 export const EnumeratorSchema = SchemaFactory.createForClass(Enumerator);

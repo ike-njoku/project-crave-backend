@@ -25,7 +25,10 @@ export class EnumeratorService {
     }
 
     // search and find existing enumerator
-    const existingEnumerator = await this.enumeratorModel.findOne({emailAddress: createEnumeratorDto.emailAddress});
+    const existingEnumerator = await this.enumeratorModel.findOne({ emailAddress: createEnumeratorDto.emailAddress }, (error, document) => {
+      if (document) console.log(document)
+      else console.log(error)
+    });
 
     if (existingEnumerator) {
       response.message = 'Enumerator already Exists'
@@ -34,43 +37,56 @@ export class EnumeratorService {
       console.log(response)
       return response;
     }
-    
+
     const newEnumerator = new this.enumeratorModel(createEnumeratorDto);
     await newEnumerator.save();
     try {
       if (newEnumerator) {
         const enumeratorPassword = Math.random().toString(36).slice(-8);
         await this.emailService.sendNewEnumeratorPasswordAndWelcome(
-          newEnumerator.emailAddress, 
+          newEnumerator.emailAddress,
           createEnumeratorDto.firstName,
           enumeratorPassword
         )
-  
+
+        await this.enumeratorModel.findOneAndUpdate({emailAddress: newEnumerator.emailAddress}, {$set: {password: enumeratorPassword}}, {new: true}, (error, document) => {
+          if (error) console.log(error)
+          else console.log(document)
+        });
+
         response.data = null;
         response.message = 'Your account has been created Successfully';
         response.status = 'success'
         return response;
       }
-  
+
       else {
         response.data = null;
         response.message = 'Could not create account. Please retry';
         response.status = 'fail'
         return response
       }
-      
+
     } catch (error) {
       console.log(error)
     }
-    
+
   }
 
-  findAll() {
-    return `This action returns all enumerator`;
+  async findAll() {
+    try {
+      return await this.enumeratorModel.find()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   findOne(id: number) {
     return `This action returns a #${id} enumerator`;
+  }
+
+  findOneByEmail(email: string) {
+    return this.enumeratorModel.findOne({ emailAddress: email })
   }
 
   update(id: number, updateEnumeratorDto: UpdateEnumeratorDto) {
