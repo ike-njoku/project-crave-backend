@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { EmailService } from 'src/email/email/email.service';
 import { ServerResponseDTO } from 'src/shared-interfaces/server-response-dto.dto';
 import { CreateEnumeratorDto } from './dto/create-enumerator.dto';
+import { SignInEnumeratorDto } from './dto/sign-in-enumerator.dto';
 import { UpdateEnumeratorDto } from './dto/update-enumerator.dto';
 import { Enumerator, EnumeratorDocument } from './enumerator.schema';
 
@@ -71,6 +72,10 @@ export class EnumeratorService {
       console.log(error)
     }
 
+  }
+
+  signInEnumerator(enumerator: SignInEnumeratorDto) {
+    
   }
 
   async findAll() {

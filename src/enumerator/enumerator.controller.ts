@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Req } from '@ne
 import { EnumeratorService } from './enumerator.service';
 import { CreateEnumeratorDto } from './dto/create-enumerator.dto';
 import { UpdateEnumeratorDto } from './dto/update-enumerator.dto';
+import { SignInEnumeratorDto } from './dto/sign-in-enumerator.dto';
 
 @Controller('api/enumerator')
 export class EnumeratorController {
@@ -10,6 +11,11 @@ export class EnumeratorController {
   @Post('create')
   create(@Body() createEnumeratorDto: CreateEnumeratorDto) {
     return this.enumeratorService.create(createEnumeratorDto);
+  }
+
+  @Post('sign-in')
+  signInEnumerator(enumerator: SignInEnumeratorDto) {
+    return this.enumeratorService.signInEnumerator(enumerator)
   }
 
   @Get('list')

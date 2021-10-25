@@ -28,7 +28,7 @@ export class Enumerator  {
   id: string
 
   @Prop()
-  enumerations: string;
+  enumerations: number;
 }
 
 export const EnumeratorSchema = SchemaFactory.createForClass(Enumerator);
