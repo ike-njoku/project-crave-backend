@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { AuthenticationService } from 'src/authentication/authentication/authentication.service';
 import { EmailService } from 'src/email/email/email.service';
 import { ServerResponseDTO } from 'src/shared-interfaces/server-response-dto.dto';
 import { CreateEnumeratorDto } from './dto/create-enumerator.dto';
@@ -13,6 +14,7 @@ export class EnumeratorService {
 
   constructor(
     private emailService: EmailService,
+    private authService: AuthenticationService,
     @InjectModel(Enumerator.name) private enumeratorModel: Model<EnumeratorDocument>
   ) {
 
@@ -26,10 +28,7 @@ export class EnumeratorService {
     }
 
     // search and find existing enumerator
-    const existingEnumerator = await this.enumeratorModel.findOne({ emailAddress: createEnumeratorDto.emailAddress }, (error, document) => {
-      if (document) console.log(document)
-      else console.log(error)
-    });
+    const existingEnumerator = await this.enumeratorModel.findOne({ emailAddress: createEnumeratorDto.emailAddress });
 
     if (existingEnumerator) {
       response.message = 'Enumerator already Exists'
@@ -40,7 +39,7 @@ export class EnumeratorService {
     }
 
     const newEnumerator = new this.enumeratorModel(createEnumeratorDto);
-    await newEnumerator.save();
+    await newEnumerator.save().then(() => console.log('saved')).catch((error:any) => console.log(error));
     try {
       if (newEnumerator) {
         const enumeratorPassword = Math.random().toString(36).slice(-8);
@@ -74,8 +73,40 @@ export class EnumeratorService {
 
   }
 
-  signInEnumerator(enumerator: SignInEnumeratorDto) {
-    
+  async signInEnumerator(enumerator: SignInEnumeratorDto) {
+    let response: ServerResponseDTO = {
+      status: 'success',
+      message: '',
+      data: ''
+    }
+
+    const existingEnumerator = await this.enumeratorModel.findOne({emailAddress: enumerator.emailAddress})
+    if (existingEnumerator.password === enumerator.password) {
+      const signedToken = await this.authService.signJWTToken(
+        {
+          userName: existingEnumerator.emailAddress,
+          role: existingEnumerator.role
+        }
+      )
+
+      if(signedToken) {
+        response.status = 'success';
+        response.message = `Signed in as ${existingEnumerator.emailAddress}`;
+        response.data = signedToken
+      }
+      else {
+        response.status = 'fail';
+        response.message = `Could not sign JWT token`;
+        response.data = null;
+      }
+    }
+    else {
+      response.status = 'fail';
+      response.message = 'Invalid Credentials';
+      response.data = null;
+    }
+
+    return response;
   }
 
   async findAll() {

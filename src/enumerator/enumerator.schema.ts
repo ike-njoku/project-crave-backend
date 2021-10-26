@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Role } from 'src/authentication/roles.enum';
 
 export type EnumeratorDocument = Enumerator & Document;
 
@@ -29,6 +30,9 @@ export class Enumerator  {
 
   @Prop()
   enumerations: number;
+
+  @Prop({default: 'Enumerator'})
+  role: Role
 }
 
 export const EnumeratorSchema = SchemaFactory.createForClass(Enumerator);

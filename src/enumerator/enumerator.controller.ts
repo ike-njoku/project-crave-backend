@@ -3,6 +3,8 @@ import { EnumeratorService } from './enumerator.service';
 import { CreateEnumeratorDto } from './dto/create-enumerator.dto';
 import { UpdateEnumeratorDto } from './dto/update-enumerator.dto';
 import { SignInEnumeratorDto } from './dto/sign-in-enumerator.dto';
+import * as dotenv from "dotenv";
+dotenv.config({ path: __dirname+'/.env' });
 
 @Controller('api/enumerator')
 export class EnumeratorController {
@@ -14,7 +16,7 @@ export class EnumeratorController {
   }
 
   @Post('sign-in')
-  signInEnumerator(enumerator: SignInEnumeratorDto) {
+  signInEnumerator(@Body() enumerator: SignInEnumeratorDto) {
     return this.enumeratorService.signInEnumerator(enumerator)
   }
 
