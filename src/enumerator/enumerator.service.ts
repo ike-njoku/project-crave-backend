@@ -85,6 +85,7 @@ export class EnumeratorService {
       const signedToken = await this.authService.signJWTToken(
         {
           userName: existingEnumerator.emailAddress,
+          firstName: existingEnumerator.firstName,
           role: existingEnumerator.role
         }
       )
