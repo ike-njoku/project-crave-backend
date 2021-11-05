@@ -3,12 +3,16 @@ import { EnrolmentService } from './enrolment.service';
 import { CreateEnrolmentDto } from './dto/create-enrolment.dto';
 import { UpdateEnrolmentDto } from './dto/update-enrolment.dto';
 
-@WebSocketGateway()
+@WebSocketGateway({ cors: {
+  origin: "http://localhost:4201",
+  methods: ["GET", "POST"]
+}})
 export class EnrolmentGateway {
   constructor(private readonly enrolmentService: EnrolmentService) {}
 
   @SubscribeMessage('createEnrolment')
   create(@MessageBody() createEnrolmentDto: CreateEnrolmentDto) {
+    console.log('route hit')
     return this.enrolmentService.create(createEnrolmentDto);
   }
 

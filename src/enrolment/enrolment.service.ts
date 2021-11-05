@@ -5,6 +5,7 @@ import { UpdateEnrolmentDto } from './dto/update-enrolment.dto';
 @Injectable()
 export class EnrolmentService {
   create(createEnrolmentDto: CreateEnrolmentDto) {
+    console.log(createEnrolmentDto);
     return 'This action adds a new enrolment';
   }
 
