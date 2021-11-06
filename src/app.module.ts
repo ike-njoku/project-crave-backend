@@ -10,7 +10,6 @@ import { EnrolmentModule } from './enrolment/enrolment.module';
 
 @Module({
   imports: [
-    EnumeratorModule,
     MongooseModule.forRoot('mongodb://localhost/project-crave'),
     MailerModule.forRoot({
       transport: {
@@ -30,6 +29,7 @@ import { EnrolmentModule } from './enrolment/enrolment.module';
     EmailModule,
     AuthenticationModule,
     EnrolmentModule,
+    EnumeratorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

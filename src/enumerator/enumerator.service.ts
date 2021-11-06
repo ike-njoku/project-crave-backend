@@ -16,9 +16,7 @@ export class EnumeratorService {
     private emailService: EmailService,
     private authService: AuthenticationService,
     @InjectModel(Enumerator.name) private enumeratorModel: Model<EnumeratorDocument>
-  ) {
-
-  }
+  ) {}
 
   async create(createEnumeratorDto: CreateEnumeratorDto) {
     let response: ServerResponseDTO = {
