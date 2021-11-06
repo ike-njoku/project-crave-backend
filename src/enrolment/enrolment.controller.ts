@@ -7,7 +7,7 @@ import { UpdateEnrolmentDto } from './dto/update-enrolment.dto';
 export class EnrolmentController {
   constructor(private readonly enrolmentService: EnrolmentService) {}
 
-  @Post()
+  @Post('new')
   create(@Body() createEnrolmentDto: CreateEnrolmentDto) {
     return this.enrolmentService.create(createEnrolmentDto);
   }

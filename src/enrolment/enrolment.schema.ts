@@ -27,9 +27,6 @@ export class Enrolment  {
   @Prop({required: true}) 
   BVN: string;
 
-  @Prop() 
-  NIN: string;
-
   @Prop({required: true}) 
   stateOfOrigin: string;
 
@@ -43,11 +40,16 @@ export class Enrolment  {
   address: string;
 
   @Prop({required: true}) 
-  emailAddress: string;
-
-  @Prop({required: true}) 
   primaryPhoneNumber: string;
 
-  @Prop({required: true}) 
+  @Prop() 
+  NIN: string;
+
+  @Prop() 
+  emailAddress: string;
+
+  @Prop() 
   secondaryPhoneNumber: string;
 }
+
+export const EnrolmentSchema = SchemaFactory.createForClass(Enrolment);
