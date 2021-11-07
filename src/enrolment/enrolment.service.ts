@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ServerResponseDTO } from 'src/shared-interfaces/server-response-dto.dto';
+import { EnrolmentGatewayGateway } from 'src/web-socket/enrolment-gateway.gateway';
 import { CreateEnrolmentDto } from './dto/create-enrolment.dto';
 import { UpdateEnrolmentDto } from './dto/update-enrolment.dto';
 import { Enrolment, EnrolmentDocument } from './enrolment.schema';
@@ -10,6 +11,7 @@ import { Enrolment, EnrolmentDocument } from './enrolment.schema';
 export class EnrolmentService {
 
   constructor(
+    private enrolmentGateway: EnrolmentGatewayGateway,
     @InjectModel(Enrolment.name) private enrolmentModel: Model<EnrolmentDocument>
   ) {}
   async create(createEnrolmentDto: CreateEnrolmentDto) {
@@ -38,7 +40,7 @@ export class EnrolmentService {
           response.message = 'Enrolment was successful';
           response.data = newEnrolment;
           console.log(response.message);
-
+         this.enrolmentGateway.handleMessage('newEnrolment', newEnrolment)
           return response;
         }
       )

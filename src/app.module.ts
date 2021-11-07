@@ -7,6 +7,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { EmailModule } from './email/email.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { EnrolmentModule } from './enrolment/enrolment.module';
+import { WebSocketModule } from './web-socket/web-socket.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { EnrolmentModule } from './enrolment/enrolment.module';
     AuthenticationModule,
     EnrolmentModule,
     EnumeratorModule,
+    WebSocketModule,
   ],
   controllers: [AppController],
   providers: [AppService],

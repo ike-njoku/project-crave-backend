@@ -42,6 +42,9 @@ export class Enrolment  {
   @Prop({required: true}) 
   primaryPhoneNumber: string;
 
+  @Prop({required: true}) 
+  enrolledBy: string;
+
   @Prop() 
   NIN: string;
 
