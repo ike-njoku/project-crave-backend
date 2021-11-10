@@ -9,6 +9,7 @@ export class CreateEnrolmentDto {
   accountNumber: string;
   BVN: string;
   NIN?: string;
+  VRN?: string;
   stateOfOrigin: string;
   LGA: string;
   city: string;

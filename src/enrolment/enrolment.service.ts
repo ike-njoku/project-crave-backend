@@ -39,7 +39,7 @@ export class EnrolmentService {
           response.status = 'success';
           response.message = 'Enrolment was successful';
           response.data = newEnrolment;
-          console.log(response.message);
+          console.log(response.message); 
          this.enrolmentGateway.handleMessage('newEnrolment', newEnrolment)
           return response;
         }

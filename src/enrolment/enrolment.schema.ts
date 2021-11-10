@@ -49,6 +49,9 @@ export class Enrolment  {
   NIN: string;
 
   @Prop() 
+  VRN: string;
+
+  @Prop() 
   emailAddress: string;
 
   @Prop() 
