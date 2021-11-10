@@ -12,7 +12,7 @@ export class EnrolmentController {
     return this.enrolmentService.create(createEnrolmentDto);
   }
 
-  @Get()
+  @Get('list')
   findAll() {
     return this.enrolmentService.findAll();
   }

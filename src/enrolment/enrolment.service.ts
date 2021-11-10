@@ -53,7 +53,24 @@ export class EnrolmentService {
     }
   }
 
-  findAll() {
+  async findAll() {
+    try {
+      let response: ServerResponseDTO = {
+        status: "fail",
+        message: '',
+        data: null
+      }
+      console.log('fetching all enrolments')
+      let allEnrolments = await this.enrolmentModel.find()
+        if (allEnrolments) {
+          response.status = "success";
+          response.message = "Fetched all Enrolments";
+          response.data = allEnrolments;
+        }
+        return response;
+    } catch (error) {
+      console.log(error)
+    }
     return `This action returns all enrolment`;
   }
 

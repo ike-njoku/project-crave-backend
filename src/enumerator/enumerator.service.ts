@@ -110,7 +110,20 @@ export class EnumeratorService {
 
   async findAll() {
     try {
-      return await this.enumeratorModel.find()
+
+      let response: ServerResponseDTO = {
+        status: 'success',
+        message: '',
+        data: ''
+      };
+
+      let allEnumerators =  await this.enumeratorModel.find();
+      if (allEnumerators) {
+        response.data = allEnumerators;
+        response.message = 'Fetched all Enumerators';
+        response.status = 'success'
+      }
+      return response;
     } catch (error) {
       console.log(error)
     }
